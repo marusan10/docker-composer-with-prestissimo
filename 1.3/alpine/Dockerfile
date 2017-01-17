@@ -1,0 +1,52 @@
+FROM php:alpine
+
+RUN apk add --update --no-cache \
+        coreutils \
+        git \
+        wget \
+        zlib-dev \
+    && docker-php-ext-install -j$(nproc) zip
+
+# Memory Limit
+RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
+
+# Time Zone
+RUN echo "date.timezone=${PHP_TIMEZONE:-UTC}" > $PHP_INI_DIR/conf.d/date_timezone.ini
+
+# Register the COMPOSER_HOME environment variable
+ENV COMPOSER_HOME /composer
+
+# Add global binary directory to PATH and make sure to re-export it
+ENV PATH /composer/vendor/bin:$PATH
+
+# Allow Composer to be run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+# Composer install (https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md)
+RUN set -xe; \
+    \
+    EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig); \
+    php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"; \
+    ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');"); \
+    \
+    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then \
+        >&2 echo 'ERROR: Invalid installer signature'; \
+        exit 1; \
+    fi; \
+    \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
+    rm /tmp/composer-setup.php
+
+# Run diagnose
+RUN composer diagnose
+
+# Install prestissimo
+RUN composer global require "hirak/prestissimo:^0.3"
+
+# Set up the volumes and working directory
+VOLUME ["/app"]
+WORKDIR /app
+
+# Set entrypoint
+ENTRYPOINT ["composer"]
+
