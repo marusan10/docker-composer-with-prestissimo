@@ -5,12 +5,12 @@ services:
 
 before_install:
   - docker build -t marusan10/composer-with-prestissimo:1.3 1.3
-  - docker build tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:1
-  - docker build tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:latest
+  - docker tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:1
+  - docker tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:latest
   - docker run marusan10/composer-with-prestissimo:1.3
   - docker build -t marusan10/composer-with-prestissimo:1.3-alpine 1.3/alpine
-  - docker build tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:1-alpine
-  - docker build tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:alpine
+  - docker tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:1-alpine
+  - docker tag marusan10/composer-with-prestissimo:1.3 marusan10/composer-with-prestissimo:alpine
   - docker run marusan10/composer-with-prestissimo:1.3-alpine
 
 after_success:
