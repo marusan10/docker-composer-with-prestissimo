@@ -40,9 +40,6 @@ RUN set -xe; \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.0.3"; \
     rm /tmp/composer-setup.php
 
-# Run diagnose
-RUN composer diagnose
-
 # Install prestissimo
 RUN composer global require "hirak/prestissimo:^0.3"
 
