@@ -1,4 +1,9 @@
-FROM php:alpine
+#
+# NOTE: THIS DOCKERFILE IS GENERATED VIA "update.sh"
+#
+# PLEASE DO NOT EDIT IT DIRECTLY.
+#
+FROM php:7.0-alpine
 
 RUN apk add --update --no-cache \
         coreutils \
