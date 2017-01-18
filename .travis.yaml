@@ -1,0 +1,44 @@
+language: bash
+
+services:
+  - docker
+
+env:
+  - VERSION=1.3 VARIANT=
+  - VERSION=1.3 VARIANT=alpine
+  - VERSION=1.3 VARIANT=php7.0
+  - VERSION=1.3 VARIANT=php7.0/alpine
+  - VERSION=1.3 VARIANT=php5.6
+  - VERSION=1.3 VARIANT=php5.6/alpine
+  - VERSION=1.2 VARIANT=
+  - VERSION=1.2 VARIANT=alpine
+  - VERSION=1.2 VARIANT=php7.0
+  - VERSION=1.2 VARIANT=php7.0/alpine
+  - VERSION=1.2 VARIANT=php5.6
+  - VERSION=1.2 VARIANT=php5.6/alpine
+  - VERSION=1.1 VARIANT=
+  - VERSION=1.1 VARIANT=alpine
+  - VERSION=1.1 VARIANT=php7.0
+  - VERSION=1.1 VARIANT=php7.0/alpine
+  - VERSION=1.1 VARIANT=php5.6
+  - VERSION=1.1 VARIANT=php5.6/alpine
+  - VERSION=1.0 VARIANT=
+  - VERSION=1.0 VARIANT=alpine
+  - VERSION=1.0 VARIANT=php7.0
+  - VERSION=1.0 VARIANT=php7.0/alpine
+  - VERSION=1.0 VARIANT=php5.6
+  - VERSION=1.0 VARIANT=php5.6/alpine
+
+before_script:
+  - env | sort
+  - cd "$VERSION"
+  - image="marusan10/composer-with-prestissimo:${VERSION}${VARIANT:+-$VARIANT}"
+  - image="${image//'/'/-}"
+
+script:
+  - docker build -t "$image" "${VARIANT:-.}"
+
+after_script:
+  - docker images
+
+# vim:set et ts=2 sw=2:
