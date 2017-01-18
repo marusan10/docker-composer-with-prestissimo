@@ -37,8 +37,6 @@ before_script:
 
 script:
   - docker build -t "$image" "${VARIANT:-.}"
-
-after_script:
   - docker run "$image"
 
 # vim:set et ts=2 sw=2:
