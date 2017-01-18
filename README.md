@@ -1,11 +1,29 @@
 # Supported tags and respective `Dockerfile` links
 
-- `7.1`, `7`, `latest`
-- `7.1-alpine`, `7-alpine`
-- `7.0`
-- `7.0-alpine`
-- `5.6`, `5`
-- `5.6-alpine`, `5-alpine`
+- `1.3`, `latest`
+- `1.3-alpine`, `alpine`
+- `1.3-php7.0`
+- `1.3-php7.0-alpine`
+- `1.3-php5.6`
+- `1.3-php5.6-alpine`
+- `1.2`
+- `1.2-alpine`
+- `1.2-php7.0`
+- `1.2-php7.0-alpine`
+- `1.2-php5.6`
+- `1.2-php5.6-alpine`
+- `1.1`
+- `1.1-alpine`
+- `1.1-php7.0`
+- `1.1-php7.0-alpine`
+- `1.1-php5.6`
+- `1.1-php5.6-alpine`
+- `1.0`
+- `1.0-alpine`
+- `1.0-php7.0`
+- `1.0-php7.0-alpine`
+- `1.0-php5.6`
+- `1.0-php5.6-alpine`
 
 # How to use this image.
 

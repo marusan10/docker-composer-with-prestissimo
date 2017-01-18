@@ -1,4 +1,9 @@
-FROM php:%%TAG%%
+#
+# NOTE: THIS DOCKERFILE IS GENERATED VIA "update.sh"
+#
+# PLEASE DO NOT EDIT IT DIRECTLY.
+#
+FROM php:5.6
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -28,12 +33,12 @@ RUN set -xe; \
     php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"; \
     ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');"); \
     \
-    if [ "$ACTUAL_SIGNATURE" != "%%COMPOSER_SIG%%" ]; then \
+    if [ "$ACTUAL_SIGNATURE" != "55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30" ]; then \
         >&2 echo 'ERROR: Invalid installer signature'; \
         exit 1; \
     fi; \
     \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="%%COMPOSER_VERSION%%"; \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.1.3"; \
     rm /tmp/composer-setup.php
 
 # Run diagnose

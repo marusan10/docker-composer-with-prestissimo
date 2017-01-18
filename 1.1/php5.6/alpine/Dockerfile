@@ -3,15 +3,13 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM php:7.0
+FROM php:5.6-alpine
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --update --no-cache \
+        coreutils \
         git \
-        wget \
-        zlib1g-dev \
-    && docker-php-ext-install -j$(nproc) zip \
-    && apt-get clean \
-    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+        zlib-dev \
+    && docker-php-ext-install -j$(nproc) zip
 
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
@@ -31,16 +29,15 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Composer install (https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md)
 RUN set -xe; \
     \
-    EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig); \
     php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"; \
     ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');"); \
     \
-    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then \
+    if [ "$ACTUAL_SIGNATURE" != "55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30" ]; then \
         >&2 echo 'ERROR: Invalid installer signature'; \
         exit 1; \
     fi; \
     \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.1.3"; \
     rm /tmp/composer-setup.php
 
 # Run diagnose
