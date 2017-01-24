@@ -3,11 +3,12 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM php:alpine
+FROM php:7.1-alpine
 
 RUN apk add --update --no-cache \
         coreutils \
         git \
+        subversion \
         zlib-dev \
     && docker-php-ext-install -j$(nproc) zip
 

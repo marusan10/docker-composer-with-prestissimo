@@ -8,6 +8,7 @@ FROM php:7.0-alpine
 RUN apk add --update --no-cache \
         coreutils \
         git \
+        subversion \
         zlib-dev \
     && docker-php-ext-install -j$(nproc) zip
 

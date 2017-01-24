@@ -3,6 +3,7 @@ FROM php:%%TAG%%
 RUN apk add --update --no-cache \
         coreutils \
         git \
+        subversion \
         zlib-dev \
     && docker-php-ext-install -j$(nproc) zip
 

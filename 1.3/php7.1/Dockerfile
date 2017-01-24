@@ -3,13 +3,15 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM php:alpine
+FROM php:7.1
 
-RUN apk add --update --no-cache \
-        coreutils \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
-        zlib-dev \
-    && docker-php-ext-install -j$(nproc) zip
+        subversion \
+        zlib1g-dev \
+    && docker-php-ext-install -j$(nproc) zip \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
@@ -37,7 +39,7 @@ RUN set -xe; \
         exit 1; \
     fi; \
     \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.1.3"; \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.3.1"; \
     rm /tmp/composer-setup.php
 
 # Install prestissimo
