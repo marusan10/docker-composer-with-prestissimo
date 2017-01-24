@@ -7,6 +7,18 @@
 - `1.3-php5.6`
 - `1.3-php5.6-alpine`
 
+# What is Composer?
+
+Composer helps you declare, manage and install dependencies of PHP projects.
+
+> [https://github.com/composer/composer](https://github.com/composer/composer)
+
+# What is prestissimo
+
+composer parallel install plugin.
+
+> [https://github.com/hirak/prestissimo](https://github.com/hirak/prestissimo)
+
 # How to use this image.
 
 ## Installation / Usage

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -A versions=(
+declare -A composerVersions=(
     [1.3]="1.3.1"
 )
 
@@ -14,31 +14,30 @@ generated_warning() {
 	EOH
 }
 
-for version in ${!versions[@]}; do
+for composerVersion in ${!composerVersions[@]}; do
 
-    fullVersion=${versions[$version]}
-    dockerfiles=()
+    composerFullVersion=${composerVersions[$composerVersion]}
     composerSig=$(wget -q -O - https://composer.github.io/installer.sig); \
 
     phpVersions=("7.1" "7.0" "5.6")
 
     for phpVersion in ${phpVersions[@]}; do
-        if [ -d "$version/php$phpVersion" ]; then
-            { generated_warning; cat Dockerfile-debian.template; } > "$version/php$phpVersion/Dockerfile"
+        if [ -d "$composerVersion/php$phpVersion" ]; then
+            { generated_warning; cat Dockerfile-debian.template; } > "$composerVersion/php$phpVersion/Dockerfile"
             sed -ri \
-                -e 's!%%TAG%%!'"$phpVersion"'!' \
-                -e 's!%%COMPOSER_VERSION%%!'"$fullVersion"'!' \
+                -e 's!%%DOCKER_PHP_TAG%%!'"$phpVersion"'!' \
+                -e 's!%%COMPOSER_VERSION%%!'"$composerFullVersion"'!' \
                 -e 's!%%COMPOSER_SIG%%!'"$composerSig"'!' \
-                "$version/php$phpVersion/Dockerfile"
+                "$composerVersion/php$phpVersion/Dockerfile"
         fi
 
-        if [ -d "$version/php$phpVersion/alpine" ]; then
-            { generated_warning; cat Dockerfile-alpine.template; } > "$version/php$phpVersion/alpine/Dockerfile"
+        if [ -d "$composerVersion/php$phpVersion/alpine" ]; then
+            { generated_warning; cat Dockerfile-alpine.template; } > "$composerVersion/php$phpVersion/alpine/Dockerfile"
             sed -ri \
-                -e 's!%%TAG%%!'"$phpVersion"'-alpine!' \
-                -e 's!%%COMPOSER_VERSION%%!'"$fullVersion"'!' \
+                -e 's!%%DOCKER_PHP_TAG%%!'"$phpVersion"'-alpine!' \
+                -e 's!%%COMPOSER_VERSION%%!'"$composerFullVersion"'!' \
                 -e 's!%%COMPOSER_SIG%%!'"$composerSig"'!' \
-                "$version/php$phpVersion/alpine/Dockerfile"
+                "$composerVersion/php$phpVersion/alpine/Dockerfile"
         fi
     done
 done
