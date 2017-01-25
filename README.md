@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/marusan10/docker-composer-with-prestissimo.svg?branch=master)](https://travis-ci.org/marusan10/docker-composer-with-prestissimo)
+
 # Supported tags and respective `Dockerfile` links
 
 - `1.3-php7.1`, `latest`
