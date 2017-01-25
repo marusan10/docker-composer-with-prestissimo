@@ -5,11 +5,19 @@
 #
 FROM php:7.1
 
+# Install ext-zip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        zlib1g-dev \
+    && docker-php-ext-install -j$(nproc) zip \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+        zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+
+# Install composer dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         subversion \
-        zlib1g-dev \
-    && docker-php-ext-install -j$(nproc) zip \
     && apt-get clean \
     && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 

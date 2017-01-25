@@ -5,12 +5,17 @@
 #
 FROM php:5.6-alpine
 
-RUN apk add --update --no-cache \
+# Install ext-zip
+RUN apk add --update --no-cache --virtual=.ext-zip-deps \
         coreutils \
-        git \
-        subversion \
         zlib-dev \
-    && docker-php-ext-install -j$(nproc) zip
+    && docker-php-ext-install -j$(nproc) zip \
+    && apk del .ext-zip-deps
+
+# Install composer dependencies
+RUN apk add --update --no-cache --virtual=.composer-deps \
+        git \
+        subversion
 
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
