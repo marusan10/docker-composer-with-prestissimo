@@ -1,7 +1,7 @@
 #!/bin/bash
 
 declare -A composerVersions=(
-    [1.3]="1.3.1"
+    [1.3]="1.3.2"
 )
 
 generated_warning() {
