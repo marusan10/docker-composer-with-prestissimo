@@ -43,7 +43,7 @@ RUN set -xe; \
         exit 1; \
     fi; \
     \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.3.1"; \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version="1.3.2"; \
     rm /tmp/composer-setup.php
 
 # Install prestissimo
